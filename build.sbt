@@ -17,5 +17,13 @@ val optimizeSettings = Seq(
 lazy val root = (project in file("."))
   .settings(
     name := "optimized",
-    scalacOptions ++= optimizeSettings
+    fork in run := true,
+    javaOptions := Seq(
+      "-XX:+UnlockDiagnosticVMOptions",
+      "-XX:+PrintCompilation",
+      "-XX:+PrintInlining"
+    ),
+    scalacOptions ++= optimizeSettings,
+    // Comment this out to see https://github.com/scala/bug/issues/12035
+    classpathOptions := classpathOptions.value.withFilterLibrary(false)
   )
