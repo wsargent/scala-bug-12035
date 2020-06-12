@@ -25,5 +25,5 @@ lazy val root = (project in file("."))
     ),
     scalacOptions ++= optimizeSettings,
     // Comment this out to see https://github.com/scala/bug/issues/12035
-    classpathOptions := classpathOptions.value.withFilterLibrary(false)
+    //classpathOptions := classpathOptions.value.withFilterLibrary(false)
   )
