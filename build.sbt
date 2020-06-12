@@ -14,15 +14,17 @@ val optimizeSettings = Seq(
   "-Yopt-log-inline"
 )
 
-lazy val root = (project in file("."))
+val diagnosticOptions = Seq(
+  "-XX:+UnlockDiagnosticVMOptions",
+  "-XX:+PrintCompilation",
+  "-XX:+PrintInlining"
+)
+
+// run with sbt "jmh:run"
+lazy val root = (project in file(".")).enablePlugins(JmhPlugin)
   .settings(
-    name := "optimized",
-    fork in run := true,
-    javaOptions := Seq(
-      "-XX:+UnlockDiagnosticVMOptions",
-      "-XX:+PrintCompilation",
-      "-XX:+PrintInlining"
-    ),
+    name := "scala-bug-12035",
+    //javaOptions := diagnosticOptions,
     scalacOptions ++= optimizeSettings,
     // Comment this out to see https://github.com/scala/bug/issues/12035
     //classpathOptions := classpathOptions.value.withFilterLibrary(false)
